@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tertulianos · Casa de oficios desde 2005</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:        oklch(0.957 0.012 80);
+    --paper-2:      oklch(0.928 0.018 75);
+    --cream:        oklch(0.895 0.022 75);
+    --bone:         oklch(0.83 0.025 75);
+    --ink:          oklch(0.14 0.012 60);
+    --ink-2:        oklch(0.19 0.020 50);
+    --ink-3:        oklch(0.26 0.030 50);
+    --cocoa:        oklch(0.30 0.045 50);
+    --mahogany:     oklch(0.50 0.085 35);
+    --terracotta:   oklch(0.62 0.115 38);
+    --saffron:      oklch(0.78 0.135 75);
+    --gold:         oklch(0.72 0.110 78);
+    --rule-d:       rgba(255,245,220,0.18);
+    --rule-d2:      rgba(255,245,220,0.35);
+    --rule-l:       rgba(20,15,10,0.18);
+
+    --serif: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+    --sans:  "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono:  "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink); color:var(--paper);
+    font-family:var(--sans); font-size:16px; line-height:1.55;
+    font-feature-settings:"ss01","kern","liga";
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit; text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+  /* ——— NAV ——— */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:22px 40px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+    background:linear-gradient(180deg, rgba(10,8,6,.78) 0%, rgba(10,8,6,0) 100%);
+    backdrop-filter:blur(0px); transition:backdrop-filter .4s, background .4s, padding .3s;
+  }
+  .nav.scrolled{
+    background:rgba(10,8,6,.85);
+    backdrop-filter:saturate(140%) blur(14px);
+    padding:14px 40px;
+    border-bottom:1px solid var(--rule-d);
+  }
+  .nav .left, .nav .right{
+    display:flex; gap:30px; align-items:center;
+    font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 75%, transparent);
+  }
+  .nav .right{justify-content:flex-end}
+  .nav .left a, .nav .right a{position:relative; padding:6px 0; transition:color .25s}
+  .nav .left a:hover, .nav .right a:hover{color:var(--saffron)}
+  .nav .left a::after, .nav .right a::after{
+    content:""; position:absolute; left:0; right:100%; bottom:0; height:1px; background:currentColor;
+    transition:right .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .nav .left a:hover::after, .nav .right a:hover::after{right:0}
+  .nav .center{
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:32px; line-height:1; color:var(--paper);
+    letter-spacing:-.02em;
+  }
+  .nav .center .est{
+    display:block; font-family:var(--mono); font-style:normal; font-size:8.5px;
+    letter-spacing:.32em; color:color-mix(in oklch, var(--saffron) 80%, var(--paper));
+    margin-top:4px; text-align:center;
+  }
+  .nav .reserve{
+    border:1px solid var(--rule-d2); padding:10px 18px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.22em; text-transform:uppercase;
+    transition:background .3s, color .3s, border-color .3s;
+  }
+  .nav .reserve:hover{background:var(--saffron); color:var(--ink); border-color:var(--saffron)}
+
+  /* ——— HERO ——— */
+  .hero{
+    position:relative; min-height:100vh; overflow:hidden;
+    display:grid; grid-template-rows:1fr auto;
+  }
+  .hero-bg{position:absolute; inset:0; z-index:0}
+  .hero-bg img{
+    width:100%; height:100%; object-fit:cover;
+    transform:scale(1.05); filter:saturate(.88) contrast(1.05) brightness(.78);
+    animation:slow-zoom 18s ease-in-out infinite alternate;
+  }
+  @keyframes slow-zoom{
+    0%{transform:scale(1.05) translateY(0)}
+    100%{transform:scale(1.12) translateY(-1.5%)}
+  }
+  .hero-bg::after{
+    content:""; position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(10,8,6,.55) 0%, rgba(10,8,6,0) 18%, rgba(10,8,6,0) 60%, rgba(10,8,6,.85) 100%),
+      radial-gradient(120% 80% at 50% 50%, rgba(0,0,0,0) 35%, rgba(0,0,0,.45) 100%);
+  }
+  .hero-inner{
+    position:relative; z-index:2;
+    padding:160px 60px 80px;
+    display:grid; grid-template-rows:auto 1fr auto; gap:40px;
+    min-height:100vh;
+  }
+  .hero-meta{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.28em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 70%, transparent);
+  }
+  .hero-meta .l{display:flex; flex-direction:column; gap:6px}
+  .hero-meta .r{text-align:right; display:flex; flex-direction:column; gap:6px}
+  .hero-meta .accent{color:var(--saffron)}
+  .hero-title{
+    align-self:end; max-width:1200px;
+  }
+  .hero-title .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.4em; text-transform:uppercase;
+    color:var(--saffron); margin-bottom:34px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .hero-title .eyebrow::after{content:""; flex:0 0 90px; height:1px; background:var(--saffron); opacity:.6}
+  .hero-title h1{
+    font-family:var(--serif); font-weight:300;
+    font-size:clamp(72px, 11vw, 168px); line-height:.92;
+    letter-spacing:-.035em; color:var(--paper);
+    text-wrap:balance;
+  }
+  .hero-title h1 em{font-style:italic; font-weight:300; color:var(--saffron)}
+  .hero-title h1 .sm{font-size:.55em; font-style:italic; vertical-align:.12em;}
+  .hero-title .lede{
+    margin-top:36px; max-width:560px;
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:22px; line-height:1.45;
+    color:color-mix(in oklch, var(--paper) 88%, transparent);
+  }
+  .hero-foot{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:40px;
+    border-top:1px solid var(--rule-d); padding-top:22px;
+  }
+  .hero-foot .cta{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--paper);
+    transition:gap .3s;
+  }
+  .hero-foot .cta:hover{gap:18px}
+  .hero-foot .cta .arrow{
+    width:50px; height:1px; background:var(--saffron); position:relative;
+  }
+  .hero-foot .cta .arrow::after{
+    content:""; position:absolute; right:0; top:-3px;
+    border-left:7px solid var(--saffron); border-top:3px solid transparent; border-bottom:3px solid transparent;
+  }
+  .hero-foot .marquee{
+    flex:1; overflow:hidden; mask:linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    font-family:var(--mono); font-size:10px; letter-spacing:.32em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 55%, transparent);
+  }
+  .marquee .track{display:flex; gap:80px; animation:marquee 50s linear infinite; white-space:nowrap; width:max-content}
+  @keyframes marquee{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+  .marquee .star{color:var(--saffron); margin:0 -50px 0 30px}
+  .hero-foot .scroll{
+    font-family:var(--mono); font-size:10px; letter-spacing:.28em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 55%, transparent);
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero-foot .scroll .dot{width:6px; height:6px; background:var(--saffron); border-radius:50%; animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1); opacity:1} 50%{transform:scale(1.6); opacity:.5}}
+
+  /* ——— SECTIONS GENERIC ——— */
+  .sec{padding:140px 60px; position:relative}
+  .sec.tight{padding:90px 60px}
+  .sec-head{
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:end;
+    margin-bottom:80px;
+  }
+  .sec-eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--saffron); display:flex; align-items:center; gap:14px;
+  }
+  .sec-eyebrow .num{color:color-mix(in oklch, var(--paper) 50%, transparent)}
+  .sec-eyebrow .line{flex:0 0 70px; height:1px; background:currentColor; opacity:.5}
+  .sec-title{
+    font-family:var(--serif); font-weight:300;
+    font-size:clamp(48px, 6vw, 92px); line-height:1; letter-spacing:-.02em;
+    text-wrap:balance; margin-top:24px;
+  }
+  .sec-title em{font-style:italic; font-weight:300; color:var(--saffron)}
+  .sec-lede{
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:22px; line-height:1.5;
+    color:color-mix(in oklch, var(--paper) 80%, transparent);
+    max-width:48ch; text-wrap:pretty;
+  }
+
+  /* ——— MANIFIESTO ——— */
+  .manifiesto{
+    background:linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+    border-top:1px solid var(--rule-d);
+    border-bottom:1px solid var(--rule-d);
+  }
+  .mani-inner{
+    max-width:1100px; margin:0 auto;
+    font-family:var(--serif); font-weight:300;
+    font-size:clamp(28px, 3vw, 44px); line-height:1.32; letter-spacing:-.005em;
+    text-wrap:pretty;
+  }
+  .mani-inner em{font-style:italic; color:var(--saffron)}
+  .mani-inner .drop{
+    font-family:var(--serif); font-style:italic;
+    font-size:2.2em; float:left; line-height:.78;
+    padding:.12em .18em 0 0; color:var(--saffron);
+  }
+  .mani-foot{
+    margin-top:80px; display:grid; grid-template-columns:repeat(4, 1fr); gap:0;
+    border-top:1px solid var(--rule-d);
+  }
+  .mani-foot > div{
+    padding:36px 28px; border-right:1px solid var(--rule-d);
+  }
+  .mani-foot > div:last-child{border-right:0}
+  .mani-foot .k{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--saffron); margin-bottom:14px;
+  }
+  .mani-foot .t{
+    font-family:var(--serif); font-size:28px; font-weight:400; line-height:1.05;
+    margin-bottom:12px;
+  }
+  .mani-foot .t em{font-style:italic; color:color-mix(in oklch, var(--saffron) 90%, var(--paper))}
+  .mani-foot .d{
+    font-size:13.5px; line-height:1.55;
+    color:color-mix(in oklch, var(--paper) 65%, transparent);
+  }
+
+  /* ——— LA FAMILIA ——— */
+  .familia{background:var(--ink); position:relative}
+  .familia-grid{
+    display:grid; grid-template-columns:1fr 1.1fr; gap:80px; align-items:flex-start;
+  }
+  .familia-list{display:flex; flex-direction:column}
+  .familia-row{
+    display:grid; grid-template-columns:60px 1fr auto; gap:32px; align-items:center;
+    padding:34px 0;
+    border-top:1px solid var(--rule-d);
+    cursor:pointer; transition:padding .35s cubic-bezier(.2,.7,.2,1), border-color .3s;
+  }
+  .familia-row:last-child{border-bottom:1px solid var(--rule-d)}
+  .familia-row .idx{
+    font-family:var(--mono); font-size:11px; letter-spacing:.2em;
+    color:color-mix(in oklch, var(--paper) 45%, transparent);
+  }
+  .familia-row .name{
+    font-family:var(--serif); font-weight:300; font-size:48px; line-height:1.02;
+    letter-spacing:-.015em; color:var(--paper);
+    transition:color .3s, transform .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .familia-row .name em{font-style:italic; color:color-mix(in oklch, var(--saffron) 90%, var(--paper))}
+  .familia-row .role{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.22em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 55%, transparent);
+    display:block; margin-top:8px;
+  }
+  .familia-row .arrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 40%, transparent);
+    display:flex; align-items:center; gap:10px;
+    transition:color .3s, gap .3s;
+  }
+  .familia-row .arrow::after{content:"→"}
+  .familia-row:hover{padding-left:18px; border-color:var(--rule-d2)}
+  .familia-row:hover .name{color:var(--saffron); transform:translateX(2px)}
+  .familia-row:hover .arrow{color:var(--saffron); gap:18px}
+  .familia-row.active .name{color:var(--saffron)}
+
+  .familia-sticky{
+    position:sticky; top:120px; aspect-ratio:4/5;
+    overflow:hidden; background:var(--ink-2);
+    border:1px solid var(--rule-d);
+  }
+  .familia-sticky .slot{
+    position:absolute; inset:0; opacity:0;
+    transition:opacity .6s cubic-bezier(.2,.7,.2,1), transform 8s linear;
+  }
+  .familia-sticky .slot.active{opacity:1}
+  .familia-sticky .slot img{
+    width:100%; height:100%; object-fit:cover;
+    transform:scale(1.05);
+    transition:transform 8s linear;
+    filter:saturate(.9) contrast(1.04);
+  }
+  .familia-sticky .slot.active img{transform:scale(1.12)}
+  .familia-sticky .meta{
+    position:absolute; left:24px; right:24px; bottom:24px; z-index:2;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    color:var(--paper);
+  }
+  .familia-sticky .meta .nm{
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:32px; line-height:1; color:var(--paper);
+  }
+  .familia-sticky .meta .gl{
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.28em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 70%, transparent);
+  }
+  .familia-sticky::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 55%, rgba(0,0,0,.55) 100%);
+    pointer-events:none;
+  }
+
+  /* ——— HISTORIA / TIMELINE ——— */
+  .historia{
+    background:linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%);
+    border-top:1px solid var(--rule-d);
+  }
+  .historia-grid{
+    display:grid; grid-template-columns:1fr 1.2fr; gap:80px; align-items:flex-start;
+  }
+  .historia-text{
+    font-family:var(--serif); font-weight:300; font-size:20px; line-height:1.65;
+    color:color-mix(in oklch, var(--paper) 85%, transparent);
+    text-wrap:pretty;
+  }
+  .historia-text p + p{margin-top:18px}
+  .historia-text em{color:var(--saffron); font-style:italic}
+  .timeline{
+    position:relative; padding-left:20px;
+  }
+  .timeline::before{
+    content:""; position:absolute; left:0; top:6px; bottom:0; width:1px;
+    background:var(--rule-d);
+  }
+  .tl-item{position:relative; padding-bottom:36px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{
+    content:""; position:absolute; left:-25px; top:8px; width:11px; height:11px;
+    background:var(--saffron); border-radius:50%;
+    box-shadow:0 0 0 4px var(--ink);
+  }
+  .tl-year{
+    font-family:var(--mono); font-size:11px; letter-spacing:.28em; color:var(--saffron);
+    margin-bottom:10px;
+  }
+  .tl-title{
+    font-family:var(--serif); font-weight:400; font-size:24px; line-height:1.15;
+    margin-bottom:8px;
+  }
+  .tl-title em{color:var(--saffron); font-style:italic}
+  .tl-desc{
+    font-family:var(--serif); font-style:italic; font-size:15px; line-height:1.55;
+    color:color-mix(in oklch, var(--paper) 70%, transparent);
+    max-width:42ch;
+  }
+
+  /* ——— MENU DESTACADO ——— */
+  .menu-sec{position:relative; background:var(--ink)}
+  .menu-grid{
+    display:grid; grid-template-columns:1.4fr 1fr; gap:64px; align-items:flex-start;
+  }
+  .menu-card{
+    background:var(--ink-2); border:1px solid var(--rule-d);
+    padding:60px 56px; position:relative;
+  }
+  .menu-card::before{content:""; position:absolute; inset:8px; border:1px solid var(--rule-d); pointer-events:none}
+  .menu-card .cap{
+    display:block; text-align:center;
+    font-family:var(--mono); font-size:10px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--saffron); margin-bottom:16px;
+  }
+  .menu-card .ttl{
+    text-align:center; font-family:var(--serif); font-weight:300; font-size:48px; line-height:1; letter-spacing:-.015em;
+    margin-bottom:6px;
+  }
+  .menu-card .ttl em{font-style:italic; color:var(--saffron)}
+  .menu-card .stt{
+    text-align:center; font-family:var(--serif); font-style:italic; font-size:15px;
+    color:color-mix(in oklch, var(--paper) 65%, transparent);
+    margin-bottom:36px;
+  }
+  .menu-sec-head{
+    text-align:center; font-family:var(--mono); font-size:10px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--saffron); margin:24px 0 18px;
+    display:flex; align-items:center; justify-content:center; gap:14px;
+  }
+  .menu-sec-head .l{height:1px; width:80px; background:currentColor; opacity:.4}
+  .menu-item{
+    display:grid; grid-template-columns:1fr auto; gap:18px; align-items:baseline;
+    padding:14px 0; border-bottom:1px dashed var(--rule-d);
+  }
+  .menu-item:last-child{border-bottom:0}
+  .menu-item .nm{font-family:var(--serif); font-size:21px; font-weight:400}
+  .menu-item .nm em{color:var(--saffron); font-style:italic}
+  .menu-item .desc{
+    font-family:var(--serif); font-style:italic; font-size:13.5px; line-height:1.45;
+    color:color-mix(in oklch, var(--paper) 65%, transparent);
+    margin-top:4px;
+  }
+  .menu-item .px{
+    font-family:var(--mono); font-size:13px; letter-spacing:.04em; color:var(--saffron);
+    align-self:start;
+  }
+  .menu-cta{
+    margin-top:36px; text-align:center;
+  }
+  .menu-cta a{
+    display:inline-block; padding:14px 24px; border:1px solid var(--saffron); color:var(--saffron);
+    font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+    transition:background .3s, color .3s;
+  }
+  .menu-cta a:hover{background:var(--saffron); color:var(--ink)}
+
+  .menu-aside .dish{
+    aspect-ratio:4/5; overflow:hidden; border:1px solid var(--rule-d); margin-bottom:18px;
+    position:relative;
+  }
+  .menu-aside .dish img{width:100%; height:100%; object-fit:cover; transition:transform 1.2s cubic-bezier(.2,.7,.2,1); filter:saturate(.9) contrast(1.05)}
+  .menu-aside .dish:hover img{transform:scale(1.05)}
+  .menu-aside .cap-dish{
+    font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 55%, transparent);
+    display:flex; justify-content:space-between;
+  }
+  .menu-aside .cap-dish .star{color:var(--saffron)}
+
+  /* ——— EVENTOS ——— */
+  .eventos{
+    position:relative; padding:0; overflow:hidden;
+    min-height:100vh; display:grid; grid-template-columns:1fr 1fr; align-items:stretch;
+    background:var(--ink-2);
+  }
+  .eventos-bg{position:relative; overflow:hidden}
+  .eventos-bg img{
+    width:100%; height:100%; object-fit:cover; min-height:100%;
+    transform:scale(1.02); transition:transform 1.5s ease-out;
+    filter:saturate(.88) contrast(1.05) brightness(.85);
+  }
+  .eventos:hover .eventos-bg img{transform:scale(1.05)}
+  .eventos-bg::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(90deg, rgba(0,0,0,.0) 30%, rgba(20,15,10,.6) 100%);
+  }
+  .eventos-content{
+    padding:120px 60px; display:flex; flex-direction:column; justify-content:center;
+    border-left:1px solid var(--rule-d);
+  }
+  .eventos-content .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--saffron); margin-bottom:24px;
+  }
+  .eventos-content h2{
+    font-family:var(--serif); font-weight:300; font-size:clamp(48px, 5.5vw, 84px); line-height:1; letter-spacing:-.02em;
+    text-wrap:balance;
+  }
+  .eventos-content h2 em{color:var(--saffron); font-style:italic}
+  .eventos-content p{
+    margin-top:28px; font-family:var(--serif); font-style:italic; font-size:19px; line-height:1.55;
+    color:color-mix(in oklch, var(--paper) 80%, transparent); max-width:44ch;
+  }
+  .eventos-pills{
+    display:flex; gap:10px; flex-wrap:wrap; margin-top:32px;
+  }
+  .eventos-pills span{
+    padding:7px 14px; border:1px solid var(--rule-d2);
+    font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 75%, transparent);
+  }
+  .eventos-cta{
+    margin-top:42px;
+    display:inline-flex; align-items:center; gap:14px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+    transition:gap .3s, color .3s;
+    align-self:flex-start;
+    padding:14px 22px; border:1px solid var(--saffron); color:var(--saffron);
+  }
+  .eventos-cta:hover{gap:22px; background:var(--saffron); color:var(--ink)}
+
+  /* ——— GALERIA ——— */
+  .galeria{padding:140px 60px; background:var(--ink)}
+  .galeria-grid{
+    display:grid; grid-template-columns:repeat(12, 1fr); grid-auto-rows:160px; gap:14px;
+  }
+  .g-cell{position:relative; overflow:hidden; background:var(--ink-2)}
+  .g-cell img{width:100%; height:100%; object-fit:cover; transition:transform 1.5s cubic-bezier(.2,.7,.2,1); filter:saturate(.92) contrast(1.05)}
+  .g-cell:hover img{transform:scale(1.07)}
+  .g-cell::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 60%, rgba(0,0,0,.5));
+    opacity:0; transition:opacity .35s;
+  }
+  .g-cell:hover::after{opacity:1}
+  .g-cell .lbl{
+    position:absolute; bottom:14px; left:16px; right:16px; z-index:2;
+    font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--paper);
+    transform:translateY(8px); opacity:0; transition:transform .35s, opacity .35s;
+  }
+  .g-cell:hover .lbl{transform:translateY(0); opacity:1}
+  .g-1{grid-column:span 6; grid-row:span 3}
+  .g-2{grid-column:span 3; grid-row:span 2}
+  .g-3{grid-column:span 3; grid-row:span 2}
+  .g-4{grid-column:span 3; grid-row:span 1}
+  .g-5{grid-column:span 3; grid-row:span 1}
+  .g-6{grid-column:span 4; grid-row:span 2}
+  .g-7{grid-column:span 4; grid-row:span 2}
+  .g-8{grid-column:span 4; grid-row:span 2}
+
+  /* ——— RESERVAS ——— */
+  .reservas{
+    background:linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+    border-top:1px solid var(--rule-d);
+    padding:140px 60px;
+  }
+  .reservas-grid{
+    display:grid; grid-template-columns:1fr 1.2fr; gap:80px; align-items:flex-start;
+  }
+  .reservas-grid h2{
+    font-family:var(--serif); font-weight:300; font-size:clamp(48px, 5.5vw, 84px); line-height:1; letter-spacing:-.02em;
+  }
+  .reservas-grid h2 em{color:var(--saffron); font-style:italic}
+  .reservas-grid .lede{
+    margin-top:30px; font-family:var(--serif); font-style:italic; font-size:20px;
+    color:color-mix(in oklch, var(--paper) 78%, transparent); max-width:42ch; line-height:1.5;
+  }
+  .form{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:18px;
+    background:var(--ink); border:1px solid var(--rule-d);
+    padding:40px;
+  }
+  .form .field{display:flex; flex-direction:column; gap:8px}
+  .form .field.wide{grid-column:span 2}
+  .form label{
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--saffron);
+  }
+  .form input, .form select, .form textarea{
+    background:transparent; border:0; border-bottom:1px solid var(--rule-d2);
+    padding:8px 0; color:var(--paper);
+    font-family:var(--serif); font-size:18px;
+    outline:none; transition:border-color .3s;
+  }
+  .form input::placeholder, .form textarea::placeholder{
+    color:color-mix(in oklch, var(--paper) 30%, transparent);
+    font-style:italic;
+  }
+  .form input:focus, .form select:focus, .form textarea:focus{border-color:var(--saffron)}
+  .form select{appearance:none; background:transparent}
+  .form select option{background:var(--ink); color:var(--paper)}
+  .form .submit{grid-column:span 2; margin-top:20px}
+  .form button{
+    width:100%; padding:18px;
+    background:var(--saffron); color:var(--ink);
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.32em; text-transform:uppercase;
+    cursor:pointer; transition:background .3s, letter-spacing .3s;
+  }
+  .form button:hover{background:var(--paper); letter-spacing:.38em}
+
+  /* ——— UBICACIONES ——— */
+  .ubicaciones{padding:140px 60px; background:var(--ink); border-top:1px solid var(--rule-d)}
+  .ubic-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;
+    margin-top:60px;
+  }
+  .ubic-card{
+    background:var(--ink-2); border:1px solid var(--rule-d);
+    padding:32px 28px;
+    transition:border-color .3s, background .3s;
+    cursor:pointer; position:relative;
+  }
+  .ubic-card:hover{border-color:var(--saffron); background:color-mix(in oklch, var(--ink-2) 80%, var(--mahogany))}
+  .ubic-card .role{
+    font-family:var(--mono); font-size:10px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--saffron); margin-bottom:14px;
+  }
+  .ubic-card .nm{
+    font-family:var(--serif); font-weight:400; font-size:30px; line-height:1.05; letter-spacing:-.005em;
+  }
+  .ubic-card .nm em{font-style:italic; color:var(--saffron)}
+  .ubic-card .addr{
+    margin-top:18px; padding-top:18px; border-top:1px solid var(--rule-d);
+    font-family:var(--serif); font-style:italic; font-size:16px; line-height:1.5;
+    color:color-mix(in oklch, var(--paper) 78%, transparent);
+  }
+  .ubic-card .hrs{
+    margin-top:18px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; line-height:1.7;
+    color:color-mix(in oklch, var(--paper) 65%, transparent);
+  }
+  .ubic-card .hrs strong{color:var(--saffron); font-weight:400; margin-right:6px}
+  .ubic-card .arrow{
+    position:absolute; right:24px; top:30px;
+    font-family:var(--mono); font-size:14px; color:color-mix(in oklch, var(--paper) 40%, transparent);
+    transition:color .3s, transform .3s;
+  }
+  .ubic-card:hover .arrow{color:var(--saffron); transform:translate(4px,-4px)}
+
+  /* ——— SOUVENIRS ——— */
+  .souvenirs{
+    padding:140px 60px;
+    background:linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 50%, var(--ink) 100%);
+    border-top:1px solid var(--rule-d);
+  }
+  .sv-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;
+    margin-top:60px;
+  }
+  .sv-item{cursor:pointer; transition:transform .35s}
+  .sv-item:hover{transform:translateY(-4px)}
+  .sv-item .img{
+    aspect-ratio:1; background:var(--ink-2); border:1px solid var(--rule-d);
+    display:grid; place-items:center; position:relative; overflow:hidden;
+  }
+  .sv-item .img img{
+    max-width:60%; max-height:60%;
+    filter:brightness(1.1) saturate(.9);
+    transition:transform .5s;
+  }
+  .sv-item:hover .img img{transform:scale(1.06)}
+  .sv-item .img::before{
+    content:""; position:absolute; inset:14px; border:1px dashed var(--rule-d);
+  }
+  .sv-item .lbl{
+    margin-top:18px; display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .sv-item .lbl .nm{
+    font-family:var(--serif); font-size:22px; font-weight:400;
+  }
+  .sv-item .lbl .nm em{color:var(--saffron); font-style:italic}
+  .sv-item .lbl .px{
+    font-family:var(--mono); font-size:11px; letter-spacing:.04em; color:var(--saffron);
+  }
+  .sv-item .desc{
+    font-family:var(--serif); font-style:italic; font-size:13.5px;
+    color:color-mix(in oklch, var(--paper) 60%, transparent);
+    margin-top:4px;
+  }
+
+  /* ——— FOOTER ——— */
+  footer{
+    background:#0a0805; border-top:1px solid var(--rule-d);
+    padding:80px 60px 36px;
+  }
+  .ft-top{
+    display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:60px;
+    padding-bottom:60px; border-bottom:1px solid var(--rule-d);
+  }
+  .ft-brand .crest{
+    font-family:var(--serif); font-style:italic; font-weight:300; font-size:64px; line-height:1; color:var(--saffron);
+  }
+  .ft-brand .sub{
+    margin-top:14px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.28em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 60%, transparent);
+  }
+  .ft-brand p{
+    margin-top:24px;
+    font-family:var(--serif); font-style:italic; font-size:16px; line-height:1.55;
+    color:color-mix(in oklch, var(--paper) 70%, transparent);
+    max-width:32ch;
+  }
+  .ft-col h4{
+    font-family:var(--mono); font-size:10px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--saffron); margin-bottom:18px; font-weight:500;
+  }
+  .ft-col ul{list-style:none; display:flex; flex-direction:column; gap:10px}
+  .ft-col li{font-family:var(--serif); font-size:16px}
+  .ft-col li a{color:color-mix(in oklch, var(--paper) 80%, transparent); transition:color .25s}
+  .ft-col li a:hover{color:var(--saffron)}
+  .ft-bottom{
+    margin-top:36px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px;
+    font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+    color:color-mix(in oklch, var(--paper) 45%, transparent);
+  }
+  .ft-bottom .socials{display:flex; gap:18px}
+  .ft-bottom .socials a:hover{color:var(--saffron)}
+
+  /* paper noise overlay (subtle) */
+  body::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:1000;
+    opacity:.06; mix-blend-mode:overlay;
+    background-image:
+      radial-gradient(circle at 30% 20%, rgba(255,230,180,1) 0.5px, transparent 1.2px),
+      radial-gradient(circle at 70% 60%, rgba(255,230,180,1) 0.4px, transparent 1px);
+    background-size:140px 140px, 90px 90px;
+  }
+
+  /* fade-in on scroll */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .9s ease-out, transform .9s ease-out}
+  .reveal.in{opacity:1; transform:translateY(0)}
+
+  @media (max-width: 900px){
+    .nav{grid-template-columns:auto 1fr auto; padding:16px 22px}
+    .nav .left, .nav .right{display:none}
+    .sec, .galeria, .reservas, .ubicaciones, .souvenirs{padding:80px 24px}
+    .sec-head{grid-template-columns:1fr}
+    .familia-grid, .historia-grid, .menu-grid, .reservas-grid{grid-template-columns:1fr; gap:40px}
+    .familia-sticky{position:relative; top:0; aspect-ratio:4/3}
+    .eventos{grid-template-columns:1fr}
+    .eventos-content{padding:60px 24px}
+    .mani-foot{grid-template-columns:1fr 1fr}
+    .ubic-grid, .sv-grid{grid-template-columns:1fr 1fr}
+    .galeria-grid{grid-template-columns:repeat(6,1fr); grid-auto-rows:120px}
+    .g-1, .g-6, .g-7, .g-8{grid-column:span 6; grid-row:span 2}
+    .g-2, .g-3, .g-4, .g-5{grid-column:span 3; grid-row:span 1}
+    .ft-top{grid-template-columns:1fr 1fr; gap:30px}
+    .hero-inner{padding:110px 24px 40px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ——— NAV ——— -->
+<header class="nav" id="nav" data-screen-label="A · Casa Editorial">
+  <nav class="left">
+    <a href="#familia">La Casa</a>
+    <a href="#historia">Historia</a>
+    <a href="#menu">Carta</a>
+    <a href="#eventos">Eventos</a>
+  </nav>
+  <a href="#top" class="center">
+    Tertulianos
+    <span class="est">Grupo Culinario · Est. MMV</span>
+  </a>
+  <nav class="right">
+    <a href="#ubicaciones">Ubicaciones</a>
+    <a href="#souvenirs">Souvenirs</a>
+    <a href="#reservas" class="reserve">Reservar</a>
+  </nav>
+</header>
+
+<!-- ——— HERO ——— -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <img src="scout/amb-39.jpg" alt="Comedor de Tertulianos" />
+  </div>
+  <div class="hero-inner">
+    <div class="hero-meta">
+      <div class="l">
+        <span>Quetzaltenango · Guatemala</span>
+        <span class="accent">Abierto · Hoy hasta 22:00</span>
+      </div>
+      <div class="r">
+        <span>Edición de Temporada · Abril — Junio</span>
+        <span>Vol. XXI · No. 02</span>
+      </div>
+    </div>
+    <div class="hero-title">
+      <div class="eyebrow">Casa de oficios · Cocina de autor</div>
+      <h1>Una <em>mesa</em>,<br/>siete maneras<br/>de <em>quedarse</em>.</h1>
+      <p class="lede">Veinte años después seguimos creyendo lo mismo: que comer bien es una forma de pertenecer. Esta es nuestra casa, abierta de par en par.</p>
+    </div>
+    <div class="hero-foot">
+      <a href="#familia" class="cta">
+        <span>Conocer la casa</span>
+        <span class="arrow"></span>
+      </a>
+      <div class="marquee">
+        <div class="track">
+          <span>Tertulianos Museo</span><span class="star">✦</span>
+          <span>Tertulianos Bistro Bar</span><span class="star">✦</span>
+          <span>Bazar del Café</span><span class="star">✦</span>
+          <span>Vanta</span><span class="star">✦</span>
+          <span>Legado</span><span class="star">✦</span>
+          <span>Souvenirs Tertulianos</span><span class="star">✦</span>
+          <span>Tertulianos Museo</span><span class="star">✦</span>
+          <span>Tertulianos Bistro Bar</span><span class="star">✦</span>
+          <span>Bazar del Café</span><span class="star">✦</span>
+          <span>Vanta</span><span class="star">✦</span>
+          <span>Legado</span><span class="star">✦</span>
+          <span>Souvenirs Tertulianos</span><span class="star">✦</span>
+        </div>
+      </div>
+      <div class="scroll"><span class="dot"></span><span>Desplazar</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— MANIFIESTO ——— -->
+<section class="sec manifiesto" id="manifiesto">
+  <div class="mani-inner reveal">
+    <span class="drop">U</span>na casa no se hereda — se cocina. Llevamos veinte años cocinándola, plato por plato, taza por taza, sobremesa por sobremesa. Lo que somos hoy <em>no es una marca</em>: es una manera de recibir a la gente, repetida hasta volverse oficio.
+  </div>
+  <div class="mani-foot">
+    <div class="reveal">
+      <div class="k">I · Oficio</div>
+      <div class="t">Lo <em>hecho a mano</em>.</div>
+      <div class="d">Cada pan, cada salsa, cada brioche tiene un par de manos detrás. No nos interesa lo rápido — nos interesa lo bien hecho.</div>
+    </div>
+    <div class="reveal">
+      <div class="k">II · Casa</div>
+      <div class="t">La <em>sobremesa</em>.</div>
+      <div class="d">Si la conversación dura más que el plato, hicimos nuestro trabajo. Pedimos que se queden.</div>
+    </div>
+    <div class="reveal">
+      <div class="k">III · Memoria</div>
+      <div class="t">Lo <em>guatemalteco</em>.</div>
+      <div class="d">Cocinamos desde aquí. Maíz, cardamomo, cacao, café altense. Nuestro recetario empieza en la abuela y termina en mañana.</div>
+    </div>
+    <div class="reveal">
+      <div class="k">IV · Hospitalidad</div>
+      <div class="t">Recibir <em>bien</em>.</div>
+      <div class="d">Nadie es cliente. Es huésped. Y un huésped se nombra, se reconoce, se despide en la puerta.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— LA FAMILIA ——— -->
+<section class="sec familia" id="familia">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="num">II</span><span class="line"></span><span>Las marcas de la casa</span></div>
+      <h2 class="sec-title">La <em>familia</em>.<br/>Siete oficios, una <em>mesa</em>.</h2>
+    </div>
+    <p class="sec-lede">Cada marca atiende un momento distinto del día — el desayuno largo, el café de tarde, la cena con vino, el regalo que se lleva a casa. Bajo el mismo techo, con el mismo oficio.</p>
+  </div>
+
+  <div class="familia-grid">
+    <div class="familia-list" id="familia-list">
+      <a href="#" class="familia-row active" data-slot="0">
+        <span class="idx">N° 01</span>
+        <span>
+          <span class="name"><em>Tertulianos</em> Museo</span>
+          <span class="role">Comedor de casa · Almuerzo y cena</span>
+        </span>
+        <span class="arrow">Entrar</span>
+      </a>
+      <a href="#" class="familia-row" data-slot="1">
+        <span class="idx">N° 02</span>
+        <span>
+          <span class="name">Tertulianos <em>Bistro Bar</em></span>
+          <span class="role">Bistronomía · Carta y coctelería de autor</span>
+        </span>
+        <span class="arrow">Entrar</span>
+      </a>
+      <a href="#" class="familia-row" data-slot="2">
+        <span class="idx">N° 03</span>
+        <span>
+          <span class="name"><em>Bazar</em> del Café</span>
+          <span class="role">Café de especialidad · Pastelería de casa</span>
+        </span>
+        <span class="arrow">Entrar</span>
+      </a>
+      <a href="#" class="familia-row" data-slot="3">
+        <span class="idx">N° 04</span>
+        <span>
+          <span class="name"><em>Vanta</em></span>
+          <span class="role">Cocina de noche · Brasas y coctelería oscura</span>
+        </span>
+        <span class="arrow">Entrar</span>
+      </a>
+      <a href="#" class="familia-row" data-slot="4">
+        <span class="idx">N° 05</span>
+        <span>
+          <span class="name"><em>Legado</em></span>
+          <span class="role">Eventos privados · Banquetes y bodas</span>
+        </span>
+        <span class="arrow">Entrar</span>
+      </a>
+      <a href="#" class="familia-row" data-slot="5">
+        <span class="idx">N° 06</span>
+        <span>
+          <span class="name">Souvenirs <em>Tertulianos</em></span>
+          <span class="role">Tienda de casa · Mermeladas, cafés, regalos</span>
+        </span>
+        <span class="arrow">Entrar</span>
+      </a>
+    </div>
+
+    <div class="familia-sticky">
+      <div class="slot active" data-slot="0"><img src="scout/amb-39.jpg" alt="Tertulianos Museo" /></div>
+      <div class="slot" data-slot="1"><img src="scout/chef-2.jpg" alt="Tertulianos Bistro Bar" /></div>
+      <div class="slot" data-slot="2"><img src="scout/cafe-7.jpg" alt="Bazar del Café" /></div>
+      <div class="slot" data-slot="3"><img src="scout/vanta-4.jpg" alt="Vanta" /></div>
+      <div class="slot" data-slot="4"><img src="scout/sal-1.jpg" alt="Legado · Eventos" /></div>
+      <div class="slot" data-slot="5"><img src="scout/cafe-17.jpg" alt="Souvenirs" /></div>
+      <div class="meta">
+        <span class="nm" id="familia-name">Tertulianos Museo</span>
+        <span class="gl" id="familia-gl">N° 01 · 14 Avenida 5-26</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— HISTORIA ——— -->
+<section class="sec historia" id="historia">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="num">III</span><span class="line"></span><span>Desde MMV</span></div>
+      <h2 class="sec-title">Veinte años <em>de oficio</em>.</h2>
+    </div>
+    <p class="sec-lede">Una casa en pleno centro de Xela, una receta de la abuela, dos manos. Esta es la historia corta de algo que se sigue cocinando.</p>
+  </div>
+
+  <div class="historia-grid">
+    <div class="historia-text reveal">
+      <p>Empezamos en 2005 con doce mesas, un fondo de res que tardaba dos días y una <em>idea testaruda</em>: que en Quetzaltenango cabía una mesa que sirviera la cocina guatemalteca con la pausa de la cocina europea.</p>
+      <p>Lo que era un comedor se volvió una casa. La casa se volvió un grupo. Hoy somos seis oficios — la cocina, el bistro, el café, las brasas, el banquete, la tienda — pero seguimos siendo <em>la misma cocina</em>.</p>
+      <p>No tenemos prisa por crecer. Tenemos prisa por hacerlo bien.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-year">2005 · MMV</div>
+        <div class="tl-title">Abrimos <em>la casa</em>.</div>
+        <div class="tl-desc">Doce mesas, una receta de familia y un horno encendido todo el día.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2011</div>
+        <div class="tl-title">Nace el <em>Bazar del Café</em>.</div>
+        <div class="tl-desc">El primer café de especialidad de la ciudad, con tueste propio.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2015</div>
+        <div class="tl-title">Llega el <em>Bistro Bar</em>.</div>
+        <div class="tl-desc">Coctelería de autor y una carta corta para cenar tarde.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2019</div>
+        <div class="tl-title">Vanta <em>encuentra su brasa</em>.</div>
+        <div class="tl-desc">Cocina de noche, hecha al fuego y bebida en penumbra.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2022</div>
+        <div class="tl-title">Legado <em>recibe la primera boda</em>.</div>
+        <div class="tl-desc">Banquetes en casa, con el detalle de un comedor de doce.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2025 · XX</div>
+        <div class="tl-title">Veinte años, <em>misma mesa</em>.</div>
+        <div class="tl-desc">Edición aniversario y nueva carta de temporada.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— MENU DESTACADO ——— -->
+<section class="sec menu-sec" id="menu">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="num">IV</span><span class="line"></span><span>Carta de temporada</span></div>
+      <h2 class="sec-title">Lo que se está <em>cocinando</em> hoy.</h2>
+    </div>
+    <p class="sec-lede">Una selección corta de la carta de Abril – Junio. Cambia con la temporada, con la cosecha, y con lo que esa mañana llegó al mercado.</p>
+  </div>
+
+  <div class="menu-grid">
+    <div class="menu-card reveal">
+      <span class="cap">· Carta de la casa · Abril MMXXVI ·</span>
+      <div class="ttl">Selección de <em>la</em> casa</div>
+      <div class="stt">para compartir, despacio</div>
+
+      <div class="menu-sec-head"><span class="l"></span>Para empezar<span class="l"></span></div>
+      <div class="menu-item">
+        <div>
+          <div class="nm">Caldo de res <em>de la abuela</em></div>
+          <div class="desc">Fondo de doce horas, ayote tierno, hierba buena del huerto.</div>
+        </div>
+        <div class="px">Q.  85</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="nm">Tartar de res del <em>altiplano</em></div>
+          <div class="desc">Lomo crudo, alcaparra, yema curada, pan tostado de masa madre.</div>
+        </div>
+        <div class="px">Q. 110</div>
+      </div>
+
+      <div class="menu-sec-head"><span class="l"></span>De la cocina<span class="l"></span></div>
+      <div class="menu-item">
+        <div>
+          <div class="nm">Fondue <em>para dos</em></div>
+          <div class="desc">Queso fundido, pan de campo, manzana verde, vino blanco de la casa.</div>
+        </div>
+        <div class="px">Q. 245</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="nm">Lomo a las <em>brasas</em></div>
+          <div class="desc">Costilla madurada, mantequilla de hierbas, papa al rescoldo.</div>
+        </div>
+        <div class="px">Q. 220</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="nm">Pierna de cerdo en <em>su jugo</em></div>
+          <div class="desc">Lenta cocción de doce horas, puré de manzana, glasa de mole rojo.</div>
+        </div>
+        <div class="px">Q. 175</div>
+      </div>
+
+      <div class="menu-sec-head"><span class="l"></span>Para cerrar<span class="l"></span></div>
+      <div class="menu-item">
+        <div>
+          <div class="nm">Mil hojas de <em>cardamomo</em></div>
+          <div class="desc">Crema pastelera de cardamomo verde, hojaldre de mantequilla.</div>
+        </div>
+        <div class="px">Q.  78</div>
+      </div>
+
+      <div class="menu-cta"><a href="#">Ver la carta completa →</a></div>
+    </div>
+
+    <div class="menu-aside">
+      <div class="dish reveal"><img src="scout/fondue-9.jpg" alt="Fondue para dos" /></div>
+      <div class="cap-dish"><span class="star">✦</span><span>Plato N° I · Fondue para dos</span><span>Pl. 02 / 06</span></div>
+      <div class="dish reveal" style="margin-top:40px"><img src="scout/mdt-10-40.jpg" alt="Brasas" /></div>
+      <div class="cap-dish"><span class="star">✦</span><span>Plato N° II · Lomo a las brasas</span><span>Pl. 03 / 06</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— EVENTOS ——— -->
+<section class="eventos" id="eventos">
+  <div class="eventos-bg"><img src="scout/sal-1.jpg" alt="Salón de eventos privados" /></div>
+  <div class="eventos-content reveal">
+    <div class="eyebrow">V · Eventos privados · Legado</div>
+    <h2>Una <em>boda</em>, una <em>cena</em>, una <em>reunión</em> larga.</h2>
+    <p>Abrimos la casa entera para bodas, cenas privadas, presentaciones y reuniones de trabajo. Cocina propia, salón con tarima Art Decó, capacidad para 12 a 220 invitados.</p>
+    <div class="eventos-pills">
+      <span>Bodas</span><span>Cenas privadas</span><span>Coffee Breaks</span><span>Aniversarios</span><span>Corporativos</span><span>Conferencias</span>
+    </div>
+    <a href="#reservas" class="eventos-cta">Cotizar un evento →</a>
+  </div>
+</section>
+
+<!-- ——— GALERIA ——— -->
+<section class="sec galeria" id="galeria">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="num">VI</span><span class="line"></span><span>De la casa</span></div>
+      <h2 class="sec-title">El día a día, <em>en cuadro</em>.</h2>
+    </div>
+    <p class="sec-lede">Cocina, salón, sobremesa. Lo que pasa entre las once de la mañana y la última copa de la noche.</p>
+  </div>
+
+  <div class="galeria-grid">
+    <div class="g-cell g-1 reveal"><img src="scout/amb-42.jpg" alt="" /><span class="lbl">El salón principal</span></div>
+    <div class="g-cell g-2 reveal"><img src="scout/fondue-15.jpg" alt="" /><span class="lbl">Fondue de queso</span></div>
+    <div class="g-cell g-3 reveal"><img src="scout/cafe-31.jpg" alt="" /><span class="lbl">Barra de café</span></div>
+    <div class="g-cell g-4 reveal"><img src="scout/chef-4.jpg" alt="" /><span class="lbl">En la cocina</span></div>
+    <div class="g-cell g-5 reveal"><img src="scout/tragos-51.jpg" alt="" /><span class="lbl">Coctelería</span></div>
+    <div class="g-cell g-6 reveal"><img src="scout/mdt-10-25.jpg" alt="" /><span class="lbl">Plato del día</span></div>
+    <div class="g-cell g-7 reveal"><img src="scout/nov-10.jpg" alt="" /><span class="lbl">El huerto</span></div>
+    <div class="g-cell g-8 reveal"><img src="scout/vanta-14.jpg" alt="" /><span class="lbl">Vanta · cocina de noche</span></div>
+  </div>
+</section>
+
+<!-- ——— RESERVAS ——— -->
+<section class="reservas" id="reservas">
+  <div class="reservas-grid">
+    <div>
+      <div class="sec-eyebrow"><span class="num">VII</span><span class="line"></span><span>Reservas</span></div>
+      <h2>Apartar <em>una mesa</em>.</h2>
+      <p class="lede">Pedimos que reserven con al menos cuatro horas de anticipación. Si es una cena de más de seis, escríbanos al WhatsApp para encontrar la mesa más cómoda.</p>
+      <div style="margin-top:36px; padding-top:24px; border-top:1px solid var(--rule-d); font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; line-height:2; color:color-mix(in oklch, var(--paper) 70%, transparent)">
+        <div><span style="color:var(--saffron)">Tel / WhatsApp ·</span> +502 4532 · 8923</div>
+        <div><span style="color:var(--saffron)">Mail ·</span> reservas@tertulianos.gt</div>
+      </div>
+    </div>
+    <form class="form" onsubmit="event.preventDefault(); alert('Reserva enviada (prototipo)')">
+      <div class="field"><label>Nombre completo</label><input placeholder="A nombre de quién" required /></div>
+      <div class="field"><label>Teléfono</label><input placeholder="+502" required /></div>
+      <div class="field"><label>Casa</label>
+        <select>
+          <option>Tertulianos Museo</option>
+          <option>Tertulianos Bistro Bar</option>
+          <option>Bazar del Café</option>
+          <option>Vanta</option>
+        </select>
+      </div>
+      <div class="field"><label>Personas</label>
+        <select>
+          <option>2 personas</option><option>3 personas</option><option>4 personas</option><option>5 personas</option><option>6 personas</option><option>7 +</option>
+        </select>
+      </div>
+      <div class="field"><label>Fecha</label><input type="date" /></div>
+      <div class="field"><label>Hora</label>
+        <select>
+          <option>13:00</option><option>13:30</option><option>14:00</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option>
+        </select>
+      </div>
+      <div class="field wide"><label>Nota</label><input placeholder="Cumpleaños, alergias, mesa preferida…" /></div>
+      <div class="submit"><button type="submit">Confirmar reserva</button></div>
+    </form>
+  </div>
+</section>
+
+<!-- ——— UBICACIONES ——— -->
+<section class="ubicaciones" id="ubicaciones">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="num">VIII</span><span class="line"></span><span>Encontrarnos</span></div>
+      <h2 class="sec-title">Tres <em>direcciones</em>,<br/>una <em>misma casa</em>.</h2>
+    </div>
+    <p class="sec-lede">Todo lo que somos sucede en Quetzaltenango, en tres direcciones que están a no más de diez minutos a pie una de otra.</p>
+  </div>
+
+  <div class="ubic-grid">
+    <a class="ubic-card reveal">
+      <span class="arrow">↗</span>
+      <div class="role">Casa madre · N° 01</div>
+      <div class="nm">Tertulianos <em>Museo</em></div>
+      <div class="addr">14 Avenida 5-26, Zona 3<br/>Quetzaltenango, Guatemala</div>
+      <div class="hrs">
+        <div><strong>Lun – Jue</strong>12:00 – 22:00</div>
+        <div><strong>Vie – Sáb</strong>12:00 – 23:30</div>
+        <div><strong>Domingo</strong>12:00 – 17:00</div>
+      </div>
+    </a>
+    <a class="ubic-card reveal">
+      <span class="arrow">↗</span>
+      <div class="role">Bistro · N° 02</div>
+      <div class="nm"><em>Bistro</em> Bar</div>
+      <div class="addr">6a Calle 12-08, Zona 1<br/>Quetzaltenango, Guatemala</div>
+      <div class="hrs">
+        <div><strong>Mar – Sáb</strong>17:00 – 00:30</div>
+        <div><strong>Domingo</strong>17:00 – 22:00</div>
+        <div><strong>Lunes</strong>Cerrado</div>
+      </div>
+    </a>
+    <a class="ubic-card reveal">
+      <span class="arrow">↗</span>
+      <div class="role">Café · N° 03</div>
+      <div class="nm">Bazar del <em>Café</em></div>
+      <div class="addr">14 Avenida 5-26, Zona 3, primer nivel<br/>Quetzaltenango, Guatemala</div>
+      <div class="hrs">
+        <div><strong>Lun – Sáb</strong>07:00 – 20:00</div>
+        <div><strong>Domingo</strong>08:00 – 14:00</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ——— SOUVENIRS ——— -->
+<section class="souvenirs" id="souvenirs">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="num">IX</span><span class="line"></span><span>Llevar a casa</span></div>
+      <h2 class="sec-title">Souvenirs <em>de la casa</em>.</h2>
+    </div>
+    <p class="sec-lede">Pequeña producción, hecha en cocina propia. Las mismas mermeladas que servimos en el desayuno, el café que tostamos en el Bazar, el recetario que firmamos a mano.</p>
+  </div>
+
+  <div class="sv-grid">
+    <div class="sv-item reveal">
+      <div class="img"><img src="assets/logo-bdc-white.png" alt="Café tostado de casa" /></div>
+      <div class="lbl"><span class="nm">Café <em>Tertulianos</em></span><span class="px">Q. 95</span></div>
+      <div class="desc">Tueste medio · 250 g · grano altense</div>
+    </div>
+    <div class="sv-item reveal">
+      <div class="img"><img src="assets/logo-souvenirs.png" alt="Mermelada de la casa" /></div>
+      <div class="lbl"><span class="nm">Mermelada de <em>higo</em></span><span class="px">Q. 65</span></div>
+      <div class="desc">Edición de temporada · 220 g · hecha en casa</div>
+    </div>
+    <div class="sv-item reveal">
+      <div class="img"><img src="assets/logo-legado-white.png" alt="Recetario" /></div>
+      <div class="lbl"><span class="nm">Recetario <em>XX</em></span><span class="px">Q. 320</span></div>
+      <div class="desc">20 aniversario · tapa dura · firmado</div>
+    </div>
+    <div class="sv-item reveal">
+      <div class="img"><img src="assets/logo-vanta-white.png" alt="Delantal" /></div>
+      <div class="lbl"><span class="nm">Delantal <em>de casa</em></span><span class="px">Q. 240</span></div>
+      <div class="desc">Lino color piedra · una talla</div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— FOOTER ——— -->
+<footer id="contacto">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div class="crest">Tertulianos</div>
+      <div class="sub">Grupo Culinario · Est. MMV · Xela</div>
+      <p>Una casa de oficios. Cocina guatemalteca con la pausa de Europa. Quetzaltenango, desde 2005.</p>
+    </div>
+    <div class="ft-col">
+      <h4>La casa</h4>
+      <ul>
+        <li><a href="#familia">Tertulianos Museo</a></li>
+        <li><a href="#familia">Bistro Bar</a></li>
+        <li><a href="#familia">Bazar del Café</a></li>
+        <li><a href="#familia">Vanta</a></li>
+        <li><a href="#familia">Legado</a></li>
+        <li><a href="#souvenirs">Souvenirs</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Visitar</h4>
+      <ul>
+        <li><a href="#reservas">Reservar mesa</a></li>
+        <li><a href="#eventos">Cotizar evento</a></li>
+        <li><a href="#menu">Carta de temporada</a></li>
+        <li><a href="#ubicaciones">Cómo llegar</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Hablar con la casa</h4>
+      <ul>
+        <li><a href="tel:+50245328923">+502 4532 · 8923</a></li>
+        <li><a href="#">reservas@tertulianos.gt</a></li>
+        <li><a href="#">eventos@tertulianos.gt</a></li>
+        <li><a href="#">prensa@tertulianos.gt</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div>© 2026 Grupo Culinario Tertulianos · Quetzaltenango, Guatemala</div>
+    <div class="socials">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">YouTube</a>
+      <a href="#">Spotify</a>
+    </div>
+    <div>Hecho a mano, en casa.</div>
+  </div>
+</footer>
+
+<script>
+  // nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // familia hover swap
+  const rows = document.querySelectorAll('#familia-list .familia-row');
+  const slots = document.querySelectorAll('.familia-sticky .slot');
+  const fName = document.getElementById('familia-name');
+  const fGl = document.getElementById('familia-gl');
+  const data = [
+    {name:'Tertulianos Museo', gl:'N° 01 · 14 Avenida 5-26'},
+    {name:'Tertulianos Bistro Bar', gl:'N° 02 · 6a Calle 12-08'},
+    {name:'Bazar del Café', gl:'N° 03 · primer nivel'},
+    {name:'Vanta', gl:'N° 04 · cocina de noche'},
+    {name:'Legado', gl:'N° 05 · eventos privados'},
+    {name:'Souvenirs Tertulianos', gl:'N° 06 · tienda de casa'},
+  ];
+  rows.forEach((r) => {
+    r.addEventListener('click', (e) => e.preventDefault());
+    r.addEventListener('mouseenter', () => {
+      const i = parseInt(r.dataset.slot);
+      rows.forEach(rr => rr.classList.remove('active'));
+      r.classList.add('active');
+      slots.forEach(s => s.classList.toggle('active', parseInt(s.dataset.slot) === i));
+      fName.textContent = data[i].name;
+      fGl.textContent = data[i].gl;
+    });
+  });
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
